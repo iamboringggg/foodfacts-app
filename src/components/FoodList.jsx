@@ -1,16 +1,10 @@
 import FoodCard from "./FoodCard";
 
-function FoodList({ products, loading }) {
-  if (loading) return null;
-
-  if (products.length === 0) {
-    return <p>No results found. Try a different search.</p>;
-  }
-
+function FoodList({ products }) {
   return (
     <div className="food-list">
-      {products.map((product) => (
-        <FoodCard key={product.code} product={product} />
+      {products.map((p) => (
+        <FoodCard key={p.code} product={p} />
       ))}
     </div>
   );
