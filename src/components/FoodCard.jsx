@@ -1,22 +1,24 @@
+import { Card, CardContent, Typography, CardActionArea } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function FoodCard({ product }) {
   const navigate = useNavigate();
 
   return (
-    <div
-      className="food-card"
-      onClick={() => navigate(`/product/${product.code}`)}
-      style={{ cursor: "pointer" }}
-    >
-      <img src={product.image_small_url} />
-
-      <h4>{product.product_name}</h4>
-
-      <p>{product.brands}</p>
-
-      <p>Calories: {product.nutriments?.energy_kcal ?? "N/A"}</p>
-    </div>
+    <Card>
+      <CardActionArea
+        onClick={() =>
+          navigate(`/product/${product.id}`, { state: { product } })
+        }
+      >
+        <CardContent>
+          <Typography variant="h6">
+            {product.product_name || "Unknown"}
+          </Typography>
+          <Typography color="text.secondary">{product.brands}</Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
   );
 }
 

@@ -1,32 +1,29 @@
+import { TextField, Button, Box } from "@mui/material";
 import { useState } from "react";
 
 function SearchBar({ onSearch }) {
   const [query, setQuery] = useState("");
-  const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!query.trim()) {
-      setError("Enter something");
-      return;
-    }
-
-    if (query.length < 2) {
-      setError("Min 2 chars");
-      return;
-    }
-
-    setError("");
-    onSearch(query);
+    if (query.trim()) onSearch(query);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input value={query} onChange={(e) => setQuery(e.target.value)} />
-      <button>Search</button>
-      {error && <p>{error}</p>}
-    </form>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{ display: "flex", gap: 1 }}
+    >
+      <TextField
+        fullWidth
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <Button type="submit" variant="contained">
+        Search
+      </Button>
+    </Box>
   );
 }
 
