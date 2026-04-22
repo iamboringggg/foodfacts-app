@@ -1,5 +1,5 @@
-function ErrorMessage({ message }) {
-  return <p style={{ color: "red" }}>{message}</p>;
-}
+import { Alert } from "@mui/material";
 
-export default ErrorMessage;
+export default function ErrorMessage({ message }) {
+  return <Alert severity="error">{message}</Alert>;
+}

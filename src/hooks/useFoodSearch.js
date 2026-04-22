@@ -16,18 +16,25 @@ function useFoodSearch() {
         {
           params: {
             search_terms: query,
+            search_simple: 1,
+            action: "process",
             json: 1,
             page_size: 10,
           },
         },
       );
 
-      const filtered = res.data.products.filter(
-        (p) => p.product_name && p.nutriments,
-      );
+      const filtered = res.data.products
+        .filter((p) => p.product_name && p.nutriments)
+        .map((p) => ({
+          ...p,
+          id: p.code,
+        }));
 
       setResults(filtered);
     } catch (err) {
+      console.error(err);
+
       if (err.response) {
         setError(`Server error: ${err.response.status}`);
       } else if (err.request) {
@@ -35,6 +42,7 @@ function useFoodSearch() {
       } else {
         setError("Something went wrong.");
       }
+
       setResults([]);
     } finally {
       setLoading(false);

@@ -1,29 +1,20 @@
-import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { removeItem } from "../store/savedSlice";
+import { Grid, Button } from "@mui/material";
 
-function SavedPage({ saved, dispatch }) {
-  const navigate = useNavigate();
-
-  if (saved.length === 0) {
-    return <p>No saved items</p>;
-  }
+function SavedPage() {
+  const saved = useSelector((s) => s.saved.items);
+  const dispatch = useDispatch();
 
   return (
-    <div className="page">
-      <h2>Saved Items ({saved.length})</h2>
-
+    <Grid container spacing={2}>
       {saved.map((p) => (
-        <div key={p.code}>
-          <h4>{p.product_name}</h4>
-          <p>{p.brands}</p>
-
-          <button onClick={() => navigate(`/product/${p.code}`)}>View</button>
-
-          <button onClick={() => dispatch({ type: "REMOVE", code: p.code })}>
-            Remove
-          </button>
-        </div>
+        <Grid item xs={12} sm={6} md={4} key={p.id}>
+          <h3>{p.product_name}</h3>
+          <Button onClick={() => dispatch(removeItem(p.id))}>Remove</Button>
+        </Grid>
       ))}
-    </div>
+    </Grid>
   );
 }
 
